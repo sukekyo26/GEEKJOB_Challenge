@@ -1,0 +1,4 @@
+OS : Windows10 Pro
+CPU : intel core i7-6600U 2.60GHz 2.81GHz
+RAM : 8 GB
+64bit
