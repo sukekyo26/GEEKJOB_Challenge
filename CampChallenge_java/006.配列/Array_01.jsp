@@ -18,6 +18,7 @@
             for(int a = 0; a < array.length; a++){
                 out.print(array[a] + "<br>");
             }
+            out.print("<br>");
             ArrayList<String> array2 = new ArrayList<String>();
             array2.add("10");
             array2.add("100");
