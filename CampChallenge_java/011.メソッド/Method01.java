@@ -45,7 +45,6 @@ public class Method01 extends HttpServlet {
             out.println("<title>Servlet Method01</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Method01 at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
             
