@@ -29,11 +29,6 @@ public class Method04 extends HttpServlet {
      */
     
     boolean task(PrintWriter pw){
-        if(true){
-            pw.print("この処理は正しく実行できました");
-        }else{ 
-            pw.print("正しく実行できませんでした");
-        }
         return true;
     }
     
@@ -51,7 +46,11 @@ public class Method04 extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
             
-            task(out);
+            if(task(out) == true){
+                out.print("この処理は正しく実行できました");
+            }else{ 
+                out.print("正しく実行できませんでした");
+            }
         }
     }
 
