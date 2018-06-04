@@ -29,7 +29,7 @@ public class Method05 extends HttpServlet {
      */
     
     String[] task(){
-        String[] profile = {"ID:37126", "19981222", "国立"};
+        String[] profile = {"acvnadij2", "19981222", "東京都国立市"};
         return profile; 
     } 
     
@@ -48,7 +48,7 @@ public class Method05 extends HttpServlet {
             out.println("</html>");
             
             String[] set = task();
-            for(int x = 1; x < 3; x++){
+            for(int x = 1; x <= 2; x++){
                 out.print(set[x] + "<br>");
             }
             
