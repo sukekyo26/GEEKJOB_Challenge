@@ -57,7 +57,6 @@ public class Method08 extends HttpServlet {
             out.println("<title>Servlet Method08</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Method08 at " + request.getContextPath() + "</h1>");
             
             String[][] get = {profile("sadcva2"),profile("caibvab54"),profile("yamaada")}; 
             
