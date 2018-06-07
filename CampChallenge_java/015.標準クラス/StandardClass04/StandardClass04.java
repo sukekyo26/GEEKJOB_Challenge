@@ -19,9 +19,7 @@ public class StandardClass04 {
         b.set(2015, 11, 31, 23, 59, 59);
         Date c = a.getTime(); 
         Date d = b.getTime();
-        Date e = d - c;
-        
-        System.out.println();
+        System.out.println(b.getTime().getTime() - a.getTime().getTime());
                 
     }    
 }
