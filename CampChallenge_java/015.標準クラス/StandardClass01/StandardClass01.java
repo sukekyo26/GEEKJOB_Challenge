@@ -16,7 +16,9 @@ public class StandardClass01 {
         Calendar a = Calendar.getInstance();
         //2016年1月1日 0時0分0秒
         a.set(2016, 0, 1, 00, 00, 00);
-        System.out.println(a.getTime());
+        Date e = a.getTime();
+        System.out.println(e.getTime());
+        
     }
 }    
 
