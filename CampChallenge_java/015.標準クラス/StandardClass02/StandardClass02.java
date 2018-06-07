@@ -12,11 +12,8 @@ import java.util.Date;
  */
 public class StandardClass02 {
     public static void main(String[] args){
-        // 今日の日付
         Date now = new Date();
-        // SimpleDateFormat
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH時mm分ss秒");
-
         System.out.print(sdf.format(now));
     }
 }
