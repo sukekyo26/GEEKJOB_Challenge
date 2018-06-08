@@ -52,43 +52,43 @@ public class BlackJack extends HttpServlet {
             tonegawa.setCard(tonegawa.deal());
             //ユーザーが新しくカードを引くかどうか
             while(kaiji.checkSum() == true){
-                out.println("プレイヤーの現在の得点は" + kaiji.open() + "点です<br>");
-                out.println("プレイヤーがヒットを宣言しました<br>");
+                out.println("（プレイヤーの現在の得点は" + kaiji.open() + "点です）<br>");
+                out.println("<font color = blue>プレイヤーがヒットを宣言しました</font><br>");
                 kaiji.setCard(tonegawa.hit());
             }
             //プレイヤーがバストしたかどうか
             if(kaiji.open() > 21){
-                out.println("プレイヤーがバストした為プレイヤーの負けです。<br>");
+                out.println("プレイヤーがバストした為<font color = red>プレイヤーの負け</font>です。<br>");
                 out.println("プレイヤーの得点は" + kaiji.open() +"点です<br>");
 
             } else {
-                out.println("プレイヤーがスタンドを宣言しました<br>");
+                out.println("<font color = green>プレイヤーがスタンドを宣言しました</font><br>");
                 //ディーラーが新しくカードを引くかどうか
                 while(tonegawa.checkSum() == true){
-                    out.println("ディーラーの現在の得点は" + tonegawa.open() + "点です<br>");
-                    out.println("ディーラーがヒットを宣言しました<br>");
+                    out.println("（ディーラーの現在の得点は" + tonegawa.open() + "点です）<br>");
+                    out.println("<font color = blue>ディーラーがヒットを宣言しました</font><br>");
                     tonegawa.setCard(tonegawa.hit());
                 }
                 //ディーラーがバストしたかどうか
                 if(tonegawa.open() > 21){
-                    out.println("ディーラ－がバストした為プレイヤーの勝利です<br>");
+                    out.println("ディーラ－がバストした為<font color = red>プレイヤーの勝利</font>です<br>");
                     out.println("プレイヤーの得点は" + kaiji.open() +"点です<br>");
                     out.println("ディーラーの得点は" + tonegawa.open() + "点です<br>");
                 } else {
-                    out.println("ディーラーがスタンドを宣言しました<br>");
+                    out.println("<font color = green>ディーラーがスタンドを宣言しました</font><br>");
                     //プレイヤーとディーラーの得点比較
                     if(tonegawa.open() > kaiji.open()){
                         out.println("プレイヤーの得点は" + kaiji.open() +"点です<br>");
                         out.println("ディーラーの得点は" + tonegawa.open() + "点です<br>");
-                        out.println("ディーラーの得点がプレイヤーの得点を上回ったのでディーラーの勝利です<br>");
+                        out.println("ディーラーの得点がプレイヤーの得点を上回ったので<font color = red>ディーラーの勝利</font>です<h1/><br>");
                     } else if(tonegawa.open() == kaiji.open()) {
                         out.println("プレイヤーの得点は" + kaiji.open() +"点です<br>");
                         out.println("ディーラーの得点は" + tonegawa.open() + "点です<br>");
-                        out.println("ディーラーの得点とプレイヤーの得点が同値なので引き分けです<br>");
+                        out.println("ディーラーの得点とプレイヤーの得点が同値なので<font color = red>引き分け</font>です<br>");
                     } else {
                         out.println("プレイヤーの得点は" + kaiji.open() +"点です<br>");
                         out.println("ディーラーの得点は" + tonegawa.open() + "点です<br>");
-                        out.println("プレイヤーの得点がディーラーの得点を上回ったのでプレイヤーの勝利です<br>");
+                        out.println("プレイヤーの得点がディーラーの得点を上回ったので<font color = red>プレイヤーの勝利</font>です<br>");
                     }    
                 }
             }

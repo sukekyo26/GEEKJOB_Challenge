@@ -21,7 +21,7 @@ public class BlackJack {
         tonegawa.setCard(tonegawa.deal());
         //ユーザーが新しくカードを引くかどうか
         while(kaiji.checkSum() == true){
-            System.out.println("プレイヤーの現在の得点は" + kaiji.open() + "点です");
+            System.out.println("（プレイヤーの現在の得点は" + kaiji.open() + "点です）");
             System.out.println("プレイヤーがヒットを宣言しました");
             kaiji.setCard(tonegawa.hit());
         }
@@ -34,7 +34,7 @@ public class BlackJack {
         System.out.println("プレイヤーがスタンドを宣言しました");
         //ディーラーが新しくカードを引くかどうか
         while(tonegawa.checkSum() == true){
-            System.out.println("ディーラーの現在の得点は" + tonegawa.open() + "点です");
+            System.out.println("（ディーラーの現在の得点は" + tonegawa.open() + "点です）");
             System.out.println("ディーラーがヒットを宣言しました");
             tonegawa.setCard(tonegawa.hit());
         }
