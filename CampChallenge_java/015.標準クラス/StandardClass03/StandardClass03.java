@@ -19,8 +19,7 @@ public class StandardClass03 {
         
         System.out.println(c.getTime());
         
-        Date d = c.getTime();
         SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.print(sdf.format(d));
+        System.out.print(sdf.format(c.getTime()));
     }    
 }
