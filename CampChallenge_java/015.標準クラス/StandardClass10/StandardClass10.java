@@ -47,12 +47,14 @@ public class StandardClass10 extends Thread{
                     File fr = new File("C:\\Users\\sumi3\\Documents\\GEEKJOB_Challenge\\CampChallenge_java\\015.標準クラス\\StandardClass10\\log.txt");
                     FileWriter fw;
                     try {
+                        //終了時刻
                         fw = new FileWriter(fr, true);
                         BufferedWriter bw = new BufferedWriter(fw);
                         Date end = new Date();
                         bw.write("処理を終了します。" + "時刻：" + sdf.format(end));
                         bw.newLine();
                         bw.close();
+                        //タイマーストップ
                         tm.cancel();
                     } catch (IOException ex) {
                         System.out.print("書き込みできませんでした");
