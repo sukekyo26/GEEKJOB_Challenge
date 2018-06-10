@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header>
+            <h1><font color = red>入力フォーム</font></h1>
+        </header>
+        <main>
+        <form action="" method="post" novalidate>
+            <p>名前:<input type="text" name="name" value="例:山田太郎"><br></p>
+            <p>性別:<br></p>
+                男<input type="radio" name="gender" value="男" checked>
+                女<input type="radio" name="gender" value="女"><br>
+            <p>地方:<br></p>
+            <select name="live">
+                <option value="北海道">北海道</option>
+                <option value="東北">東北</option>
+                <option value="関東">関東</option>
+                <option value="中部">中部</option>
+                <option value="近畿">近畿</option>
+                <option value="中国">中国</option>
+                <option value="四国">四国</option>
+                <option value="九州">九州</option>
+            </select>
+            
+            <p>
+                趣味を入力してください:<br>
+                <textarea cols="30" rows="10" name="interest">例:野球観戦</textarea><br>
+            </p>
+            <p>
+                メールアドレス:<br>
+                <input type="email" name="email" required><br>
+            </p>
+            <p>
+                <input type="submit" name="submit" value="送信">
+                <input type="reset" name="reset" value="リセット">
+            </p>
+                        
+        </form>
+        </main>
+        <footer>
+            <hr>
+            <p><a href="https://learn.geekjob.jp/top/index">GEEK JOB</a></p>
+        </footer>
+    </body>
+</html>
