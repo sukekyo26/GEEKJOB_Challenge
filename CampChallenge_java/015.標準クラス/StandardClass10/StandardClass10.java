@@ -4,15 +4,15 @@
  * and open the template in the editor.
  */
 package StandardClass10;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.io.*;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.io.BufferedWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 
 /**
  *
@@ -71,5 +71,3 @@ public class StandardClass10 extends Thread{
         tm.schedule(task, 0,2000);
     }
 }
-    
-    
