@@ -12,8 +12,6 @@ import java.sql.*;
 public class DB_operation_01 {
     public static void main(String[] args){
         Connection db_co = null;
-    PreparedStatement db_ps = null;
-    ResultSet db_rs = null;
     
         try{
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
