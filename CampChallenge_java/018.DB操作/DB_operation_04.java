@@ -20,7 +20,8 @@ public class DB_operation_04 {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             db_co = DriverManager.getConnection("jdbc:mysql://localhost:3306/Challenge_db?CharacterEncording=UTF-8&serverTimezone=JST", "root", "");
             
-            db_ps = db_co.prepareStatement("SELECT * FROM profiles WHERE profilesID = 1");
+            db_ps = db_co.prepareStatement("SELECT * FROM profiles WHERE profilesID = ?");
+            db_ps.setInt(1, 1);
             db_rs = db_ps.executeQuery();
             
             while (db_rs.next()){
