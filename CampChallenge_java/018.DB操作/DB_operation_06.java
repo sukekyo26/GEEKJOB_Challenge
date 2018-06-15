@@ -19,7 +19,8 @@ public class DB_operation_06 {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             db_co = DriverManager.getConnection("jdbc:mysql://localhost:3306/Challenge_db?CharacterEncording=UTF-8&serverTimezone=JST", "root", "");
-            db_ps = db_co.prepareStatement("DELETE FROM profiles WHERE profilesID = 6");
+            db_ps = db_co.prepareStatement("DELETE FROM profiles WHERE profilesID = ?");
+            db_ps.setInt(1, 6);
             //DELETEを実行
             int eu = db_ps.executeUpdate();
             
@@ -48,7 +49,6 @@ public class DB_operation_06 {
                 } catch (Exception e_co) {
                     System.out.println(e_co.getMessage());
                 }
-    
             }
             if (db_ps != null){
                 try{
@@ -56,15 +56,13 @@ public class DB_operation_06 {
                 } catch (Exception e_ps) {
                     System.out.println(e_ps.getMessage());
                 }
-    
             }
             if (db_rs != null){
                 try{
                     db_rs.close();
                 } catch (Exception e_rs) {
                     System.out.println(e_rs.getMessage());
-                }
-    
+                }    
             }
         }   
     }    
