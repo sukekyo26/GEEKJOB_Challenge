@@ -20,7 +20,10 @@ public class DB_operation_07 {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             db_co = DriverManager.getConnection("jdbc:mysql://localhost:3306/Challenge_db?CharacterEncording=UTF-8&serverTimezone=JST", "root", "");
-            db_ps = db_co.prepareStatement("UPDATE profiles SET name = '田中 次郎',age = 22 WHERE profilesID = 1");
+            db_ps = db_co.prepareStatement("UPDATE profiles SET name = ?,age = ? WHERE profilesID = ?");
+            db_ps.setString(1,"鈴木 一郎");
+            db_ps.setInt(2, 22);
+            db_ps.setInt(3, 1);
             //UPDATEを実行
             int eu = db_ps.executeUpdate();
 
