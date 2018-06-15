@@ -18,7 +18,8 @@ public class DB_operation_05 {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             db_co = DriverManager.getConnection("jdbc:mysql://localhost:3306/Challenge_db?CharacterEncording=UTF-8&serverTimezone=JST", "root", "");
-            db_ps = db_co.prepareStatement("SELECT * FROM profiles WHERE name LIKE '%茂%'");
+            db_ps = db_co.prepareStatement("SELECT * FROM profiles WHERE name LIKE ?");
+            db_ps.setString(1, "%茂%");
             db_rs = db_ps.executeQuery();
             while(db_rs.next()){
                 System.out.print("ID: " + db_rs.getString(1) + " ");
