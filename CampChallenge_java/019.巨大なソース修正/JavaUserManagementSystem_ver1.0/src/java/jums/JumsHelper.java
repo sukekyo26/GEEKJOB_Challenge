@@ -7,7 +7,7 @@ package jums;
 public class JumsHelper {
     
     //トップへのリンクを定数として設定
-    private final String homeURL = "index.jsp";
+    private final String homeURL = "http://localhost:8080/JavaUserManagementSystem_ver1.0/index.jsp";
     
     public static JumsHelper getInstance(){
         return new JumsHelper();

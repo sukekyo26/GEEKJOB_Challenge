@@ -35,6 +35,8 @@ public class InsertConfirm extends HttpServlet {
             }
             
             //フォームからの入力を取得
+            
+
             String name = request.getParameter("name");
             String year = request.getParameter("year");
             String month = request.getParameter("month");
@@ -42,17 +44,23 @@ public class InsertConfirm extends HttpServlet {
             String type = request.getParameter("type");
             String tell = request.getParameter("tell");
             String comment = request.getParameter("comment");
-
+            
+            
             //セッションに格納
-            session.setAttribute("name", name);
-            session.setAttribute("year", year);
-            session.setAttribute("month",month);
-            session.setAttribute("day", day);
-            session.setAttribute("type", type);
-            session.setAttribute("tell", tell);
-            session.setAttribute("comment", comment);
+            UserDataBeans udb = new UserDataBeans();
+            udb.setName(name);
+            udb.setYear(Integer.parseInt(year));
+            udb.setMonth(Integer.parseInt(month));
+            udb.setDay(Integer.parseInt(day));
+            udb.setTell(tell);
+            udb.setType(Integer.parseInt(type));
+            udb.setComment(comment);
+            
+            session.setAttribute("udb", udb);
+            
             System.out.println("Session updated!!");
             
+
             request.getRequestDispatcher("/insertconfirm.jsp").forward(request, response);
         }catch(Exception e){
             request.setAttribute("error", e.getMessage());

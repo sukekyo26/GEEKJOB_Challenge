@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import jums.UserDataBeans;
 
 /**
  * insert.jspと対応するサーブレット
@@ -24,9 +25,12 @@ public class Insert extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         HttpSession session = request.getSession();
+        if (request.getParameter("no") == null) session.removeAttribute("udb");
         session.setAttribute("ac", (int) (Math.random() * 1000));
-        request.getRequestDispatcher("/insert.jsp").forward(request, response);   
+        request.getRequestDispatcher("/insert.jsp").forward(request, response); 
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
