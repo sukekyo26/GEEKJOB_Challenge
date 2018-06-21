@@ -4,7 +4,6 @@
 <%
     HttpSession hs = request.getSession();
     UserDataBeans udb = (UserDataBeans) session.getAttribute("udb");
-    UserDataBeans udbr = (UserDataBeans) request.getAttribute("udbr");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
