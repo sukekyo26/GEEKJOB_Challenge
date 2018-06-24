@@ -12,7 +12,7 @@
         <title>JUMSユーザー情報検索画面</title>
     </head>
     <body>
-         <form action="SearchResult" method="POST">
+         <form action="SearchResult" method="GET"> <!-- フォーム送り先「SearchResult」-->
         名前:
         <input type="text" name="name">
         <br><br>

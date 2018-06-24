@@ -6,7 +6,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Calendar;
 
 /**
  * ユーザー情報を格納するテーブルに対しての操作処理を包括する
@@ -57,13 +62,14 @@ public class UserDataDAO {
      * @throws SQLException 呼び出し元にcatchさせるためにスロー 
      * @return 検索結果
      */
-    public UserDataDTO search(UserDataDTO ud) throws SQLException{
+    public ArrayList<UserDataDTO> search(UserDataDTO ud) throws SQLException, ParseException{
         Connection con = null;
         PreparedStatement st = null;
+        ArrayList<UserDataDTO> dataList = new ArrayList<UserDataDTO>();
         try{
             con = DBManager.getConnection();
             
-            //
+            
             String sql = "SELECT * FROM user_t";
             boolean flag = false;
             if (!ud.getName().equals("")) {
@@ -86,24 +92,41 @@ public class UserDataDAO {
                 }
             }
             st =  con.prepareStatement(sql);
-            st.setString(1, "%"+ud.getName()+"%");
-            st.setString(2, "%"+ new SimpleDateFormat("yyyy").format(ud.getBirthday())+"%");
-            st.setInt(3, ud.getType());
+            int count = 1;
+            
+            if (!ud.getName().equals("")) {
+                st.setString(count, "%"+ud.getName()+"%");
+                count++;
+            }
+            
+            if(ud.getBirthday()!=null){
+                st.setString(count, "%"+ new SimpleDateFormat("yyyy").format(ud.getBirthday())+"%");
+                count++;
+            }
+            
+            if(ud.getType() != 0) {
+                st.setInt(count, ud.getType());
+                
+            } 
             
             ResultSet rs = st.executeQuery();
-            rs.next();
-            UserDataDTO resultUd = new UserDataDTO();
-            resultUd.setUserID(rs.getInt(1));
-            resultUd.setName(rs.getString(2));
-            resultUd.setBirthday(rs.getDate(3));
-            resultUd.setTell(rs.getString(4));
-            resultUd.setType(rs.getInt(5));
-            resultUd.setComment(rs.getString(6));
-            resultUd.setNewDate(rs.getTimestamp(7));
-            
+            //DateはsqlDate(タイムスタンプ)なのでjava.util.Dateに変換
+            while(rs.next()){
+                UserDataDTO resultUd = new UserDataDTO();
+                Date date = new Date(rs.getDate(3).getTime());
+                resultUd.setUserID(rs.getInt(1));
+                resultUd.setName(rs.getString(2));
+                resultUd.setBirthday(date);
+                resultUd.setTell(rs.getString(4));
+                resultUd.setType(rs.getInt(5));
+                resultUd.setComment(rs.getString(6));
+                resultUd.setNewDate(rs.getTimestamp(7));
+                dataList.add(resultUd);
+            }
+                
             System.out.println("search completed");
 
-            return resultUd;
+            return dataList;
         }catch(SQLException e){
             System.out.println(e.getMessage());
             throw new SQLException(e);
@@ -135,9 +158,10 @@ public class UserDataDAO {
             ResultSet rs = st.executeQuery();
             rs.next();
             UserDataDTO resultUd = new UserDataDTO();
+            Date date = new Date(rs.getDate(3).getTime());
             resultUd.setUserID(rs.getInt(1));
             resultUd.setName(rs.getString(2));
-            resultUd.setBirthday(rs.getDate(3));
+            resultUd.setBirthday(date);
             resultUd.setTell(rs.getString(4));
             resultUd.setType(rs.getInt(5));
             resultUd.setComment(rs.getString(6));
@@ -156,4 +180,117 @@ public class UserDataDAO {
         }
 
     }
+    
+    /**
+     * 指定ユーザーのデータの更新を行う。
+     * 一応未記入にも対応出来るようにしたが、値をすべてセットしてからこのメソッドを呼び出してるので生かされてない
+     * @throws SQLException 呼び出し元にcatchさせるためにスロー 
+     * 戻り値は必要ないのでvoid
+     */
+    public void updateData(UserDataDTO udd) throws SQLException{
+    //
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        try{
+            con = DBManager.getConnection();
+            String sql = "UPDATE user_t";
+            boolean flag = false;
+            
+            //名前、電話番号、自己紹介が未記入の場合の処理
+            if(!udd.getName().equals("")) {
+                sql += " SET name = ?";
+                flag = true;
+            }
+            if(!udd.getTell().equals("")) {
+                if(flag) {
+                    sql += ", tell = ?";
+                }else {
+                    sql += " SET tell = ?";
+                    flag = true;
+                }
+            }
+            if(!udd.getComment().equals("")) {
+                if(flag) {
+                    sql += ", comment = ?";
+                } else {
+                    sql += " SET comment = ?";
+                    flag = true;
+                }
+            }
+            
+            //誕生日と種別を未記入にすることは物理的に不可能なので別に追加
+            if(flag){
+                sql += ", birthday = ?, type = ?";
+            } else {
+                sql += " SET birthday = ?, type = ?";
+            }
+            sql += " WHERE userID = ?";//ユーザー指定
+            
+            ps = con.prepareStatement(sql);
+            int count = 1;
+            if(!udd.getName().equals("")) {
+                ps.setString(count, udd.getName());
+                count++;
+            }
+            if(!udd.getTell().equals("")) {
+                ps.setString(count, udd.getTell());
+                count++;
+            }
+            if(!udd.getComment().equals("")) {
+                ps.setString(count, udd.getComment());
+                count++;
+            }
+            //java.util.Dateからjava.sql.Dateに変換
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(udd.getBirthday());
+            cal.set(Calendar.HOUR_OF_DAY,0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            ps.setDate(count, new java.sql.Date(cal.getTimeInMillis()));
+            count++;
+            ps.setInt(count, udd.getType());
+            count++;
+            ps.setInt(count, udd.getUserID());
+            
+            ps.executeUpdate();//SQL実行
+            System.out.println("updateData completed");
+            
+        }catch(Exception e){
+            System.out.print(e.getMessage());
+            throw new SQLException(e);
+        }finally{
+            if(con != null){
+                con.close();
+            }
+        }
+    }    
+     /**
+     * 指定ユーザーIDのデータの削除を行う。
+     * @throws SQLException 呼び出し元にcatchさせるためにスロー 
+     * 戻り値は必要ないのでvoid
+     */
+    public void deleteUserData(UserDataDTO udd) throws SQLException{
+        Connection con = null;
+        PreparedStatement ps = null;
+        try{
+            con = DBManager.getConnection();
+            String sql = "DELETE FROM user_t WHERE userID = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, udd.getUserID());//ここ
+            
+            ps.executeUpdate();//sql実行
+            System.out.println("deleteUserData completed");
+            
+        } catch(Exception e) {
+            System.out.print(e.getMessage());
+            throw new SQLException(e);
+        }finally{
+            if(con != null){
+                con.close();
+            }    
+        }
+    }
 }
+

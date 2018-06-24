@@ -25,6 +25,12 @@ public class Search extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        //Sessionにデータがあればデータを消す
+        if(session.getAttribute("searchResultData") != null) session.removeAttribute("searchResultData");
+        if(session.getAttribute("resultDetail") != null) session.removeAttribute("resultDetail");
+        if(session.getAttribute("searchDataDTO") != null) session.removeAttribute("searchDataDTO");
+        
         request.getRequestDispatcher("/search.jsp").forward(request, response);  
     }
 

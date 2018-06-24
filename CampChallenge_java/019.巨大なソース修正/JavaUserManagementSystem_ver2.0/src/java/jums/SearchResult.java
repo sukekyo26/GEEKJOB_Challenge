@@ -3,10 +3,12 @@ package jums;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -25,23 +27,45 @@ public class SearchResult extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
+        
         try{
             request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
-        
+            
+            if(session.getAttribute("searchResultData") == null & request.getParameter("btnSubmit") == null){
+                throw new Exception("不正なアクセスです");
+            }
+            
+            //Session(searchResultData)にデータがあればデータを再度更新してからsearchresut.jspに移動
+            if(session.getAttribute("searchResultData") != null) {
+                //セッション(resultDetail)にデータが残っていた場合、例えばAさんの詳細情報から検索結果に戻った時にBさんの詳細情報を見ようとするとAさん情報が表示されてしまうのでここで削除
+                if(session.getAttribute("resultDetail") != null) session.removeAttribute("resultDetail");
+                
+                UserDataDTO beforeSearchData = (UserDataDTO)session.getAttribute("searchDataDTO");
+                ArrayList<UserDataDTO> updateSearchData = UserDataDAO.getInstance().search(beforeSearchData);//前回検索した項目に一致するデータを再度検索
+                session.setAttribute("searchResultData", updateSearchData);//セッション(searchResultData)を更新
+                request.getRequestDispatcher("/searchresult.jsp").forward(request, response); 
+            }    
+            
+            
             //フォームからの入力を取得して、JavaBeansに格納
             UserDataBeans udb = new UserDataBeans();
             udb.setName(request.getParameter("name"));
             udb.setYear(request.getParameter("year"));
             udb.setType(request.getParameter("type"));
+            
 
             //DTOオブジェクトにマッピング。DB専用のパラメータに変換
             UserDataDTO searchData = new UserDataDTO();
-            udb.UD2DTOMapping(searchData);
-
-            UserDataDTO resultData = UserDataDAO .getInstance().search(searchData);
-            request.setAttribute("resultData", resultData);
+            udb.UD2DTOMapping(searchData);//これでUserDataBeansのudbの値をUserDataDTOのsearchDataに格納
+            session.setAttribute("searchDataDTO", searchData);//newセッション(searchDataDTO){search.jspで入力した項目をUserDataDTOとして保持}
             
-            request.getRequestDispatcher("/searchresult.jsp").forward(request, response);  
+            ArrayList<UserDataDTO> resultData = UserDataDAO.getInstance().search(searchData);
+            //リクエストからセッションに変更
+            session.setAttribute("searchResultData", resultData);//newセッション(searchResultData){検索した項目に一致するデータをArrayListとして保持する}
+            
+            request.getRequestDispatcher("/searchresult.jsp").forward(request, response);
         }catch(Exception e){
             //何らかの理由で失敗したらエラーページにエラー文を渡して表示。想定は不正なアクセスとDBエラー
             request.setAttribute("error", e.getMessage());

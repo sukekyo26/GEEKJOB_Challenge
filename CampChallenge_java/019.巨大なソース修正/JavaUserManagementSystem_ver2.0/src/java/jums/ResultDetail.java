@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,15 +25,28 @@ public class ResultDetail extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         try{
             request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
-
+            
+            if(session.getAttribute("searchResultData") == null & session.getAttribute("searchDataDTO") == null){
+                throw new Exception("不正なアクセスです");
+            }
+            
+            //session(resultDetail)にデータがあれば再度更新してから移動
+            if(session.getAttribute("resultDetail") != null) {
+                UserDataDTO udd = (UserDataDTO)session.getAttribute("resultDetail");
+                UserDataDTO updateData = UserDataDAO.getInstance().searchByID(udd);//IDに対応したデータをセット
+                session.setAttribute("resultDetail", updateData);//セッション(ersultDetail)を再度更新
+                request.getRequestDispatcher("/resultdetail.jsp").forward(request, response); 
+            }   
+            
             //DTOオブジェクトにマッピング。DB専用のパラメータに変換
             UserDataDTO searchData = new UserDataDTO();
-            searchData.setUserID(2);
-
+            
+            searchData.setUserID(Integer.valueOf(request.getParameter("id")));
             UserDataDTO resultData = UserDataDAO .getInstance().searchByID(searchData);
-            request.setAttribute("resultData", resultData);
+            session.setAttribute("resultDetail", resultData);//新セッション(resultDetail){クリックした人物のIDに対応するデータ情報}
             
             request.getRequestDispatcher("/resultdetail.jsp").forward(request, response);  
         }catch(Exception e){

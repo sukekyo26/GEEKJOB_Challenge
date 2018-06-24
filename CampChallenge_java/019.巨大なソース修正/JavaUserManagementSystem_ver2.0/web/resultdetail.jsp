@@ -1,8 +1,11 @@
-<%@page import="jums.JumsHelper"
-        import="jums.UserDataDTO" %>
+<%@page import="java.text.SimpleDateFormat"
+        import="jums.JumsHelper"
+        import="jums.UserDataDTO" 
+        import="javax.servlet.http.HttpSession" %>
 <%
     JumsHelper jh = JumsHelper.getInstance();
-    UserDataDTO udd = (UserDataDTO)request.getAttribute("resultData");
+    UserDataDTO udd = (UserDataDTO)session.getAttribute("resultDetail");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,7 +17,7 @@
     <body>
         <h1>詳細情報</h1>
         名前:<%= udd.getName()%><br>
-        生年月日:<%= udd.getBirthday()%><br>
+        生年月日:<%= sdf.format(udd.getBirthday())%><br>
         種別:<%= udd.getType()%><br>
         電話番号:<%= udd.getTell()%><br>
         自己紹介:<%= udd.getComment()%><br>
@@ -24,6 +27,10 @@
         </form>
         <form action="Delete" method="POST">
         <input type="submit" name="delete" value="削除"style="width:100px">
+        </form>
+        <br>
+        <form action="SearchResult" method="POST">
+        <input type="submit" name="back" value="検索結果に戻る">    
         </form>
     </body>
 </html>

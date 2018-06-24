@@ -2,6 +2,8 @@ package jums;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.text.SimpleDateFormat;
+
 
 /**
  * ユーザー情報を持ちまわるJavaBeans
@@ -17,6 +19,7 @@ public class UserDataDTO {
     private int type;
     private String comment;
     private Timestamp newDate;
+    //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     
     
     public int getUserID() {
@@ -67,5 +70,18 @@ public class UserDataDTO {
     public void setNewDate(Timestamp newDate) {
         this.newDate = newDate;
     }
-
+    
+    //UserDataDTO用のデータをUserDataBeansに変換
+    public void UD2DUDBMapping(UserDataBeans udb){
+        udb.setName(this.name);
+        SimpleDateFormat yearSdf = new SimpleDateFormat("yyyy");
+        udb.setYear(yearSdf.format(this.birthday));
+        SimpleDateFormat monthSdf = new SimpleDateFormat("MM");
+        udb.setMonth(monthSdf.format(this.birthday));
+        SimpleDateFormat daySdf = new SimpleDateFormat("dd");
+        udb.setDay(daySdf.format(this.birthday));
+        udb.setTell(this.tell);
+        udb.setType(String.valueOf(this.type));
+        udb.setComment(this.comment);
+    }   
 }

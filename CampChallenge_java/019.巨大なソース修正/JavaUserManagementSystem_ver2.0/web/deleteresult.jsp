@@ -9,5 +9,9 @@
     <body>
     <h1>削除確認</h1>
     削除しました。<br>
+    <br>
+    <form action="SearchResult" method="POST">
+        <input type="submit" name="search" value="検索結果に戻る">
+    </form>
     </body>
 </html>

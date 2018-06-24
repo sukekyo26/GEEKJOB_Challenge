@@ -1,8 +1,11 @@
 <%@page import="jums.JumsHelper"
-        import="jums.UserDataDTO" %>
+        import="jums.UserDataDTO" 
+        import="javax.servlet.http.HttpSession"
+        import="java.text.SimpleDateFormat"%>
 <%
     JumsHelper jh = JumsHelper.getInstance();
-    UserDataDTO udd = (UserDataDTO)request.getAttribute("resultData");
+    UserDataDTO udd = (UserDataDTO)session.getAttribute("resultDetail");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,9 +16,9 @@
     </head>
     <body>
     <h1>削除確認</h1>
-    以下の内容を削除します。よろしいですか？
+    以下の内容を削除します。よろしいですか？<br>
     名前:<%= udd.getName()%><br>
-    生年月日:<%= udd.getBirthday()%><br>
+    生年月日:<%= sdf.format(udd.getBirthday())%><br>
     種別:<%= udd.getType()%><br>
     電話番号:<%= udd.getTell()%><br>
     自己紹介:<%= udd.getComment()%><br>
@@ -25,7 +28,7 @@
       <input type="submit" name="YES" value="はい"style="width:100px">
     </form><br>
     <form action="ResultDetail" method="POST">
-      <input type="submit" name="NO" value="詳細画面に戻る"style="width:100px">
+      <input type="submit" name="NO" value="いいえ(詳細情報に戻る)">
     </form>
     </body>
 </html>
