@@ -46,6 +46,7 @@ public class SearchResult extends HttpServlet {
                 ArrayList<UserDataDTO> updateSearchData = UserDataDAO.getInstance().search(beforeSearchData);//前回検索した項目に一致するデータを再度検索
                 session.setAttribute("searchResultData", updateSearchData);//セッション(searchResultData)を更新
                 request.getRequestDispatcher("/searchresult.jsp").forward(request, response); 
+                return;
             }    
             
             

@@ -29,7 +29,7 @@ public class Update extends HttpServlet {
             HttpSession session = request.getSession();
             
         try {
-            if(request.getParameter("update") == null){
+            if(request.getParameter("update") == null & session.getAttribute("resultDetail") == null){
                 throw new Exception("不正なアクセスです");
             }
             

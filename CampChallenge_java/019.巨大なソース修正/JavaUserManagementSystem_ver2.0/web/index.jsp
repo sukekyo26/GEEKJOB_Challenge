@@ -1,3 +1,9 @@
+<%@page import="javax.servlet.http.HttpSession" %>
+<%
+    HttpSession hs = request.getSession();
+    hs.invalidate();
+%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja">

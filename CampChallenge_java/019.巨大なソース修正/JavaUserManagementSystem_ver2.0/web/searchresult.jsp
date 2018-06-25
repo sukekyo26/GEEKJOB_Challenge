@@ -31,7 +31,7 @@
             <tr>
                 <td><a href="ResultDetail?id=<%= (Integer)udd.get(i).getUserID()%>"><%=(String)udd.get(i).getName()%></a></td>
                 <td><%= sdf.format(udd.get(i).getBirthday())%></td>
-                <td><%= (Integer)udd.get(i).getType()%></td>
+                <td><% if((Integer)udd.get(i).getType() == 1){out.print("営業");} else if ((Integer)udd.get(i).getType() == 2){out.print("エンジニア");} else {out.print("その他");}%></td>
                 <td><%= (Date)udd.get(i).getNewDate()%></td>
             </tr>
                     <%}%>

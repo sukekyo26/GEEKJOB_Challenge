@@ -18,7 +18,7 @@
         <h1>詳細情報</h1>
         名前:<%= udd.getName()%><br>
         生年月日:<%= sdf.format(udd.getBirthday())%><br>
-        種別:<%= udd.getType()%><br>
+        種別:<% if(udd.getType() == 1){out.print("営業");} else if (udd.getType() == 2){out.print("エンジニア");} else {out.print("その他");}%><br>
         電話番号:<%= udd.getTell()%><br>
         自己紹介:<%= udd.getComment()%><br>
         登録日時:<%= udd.getNewDate()%><br>

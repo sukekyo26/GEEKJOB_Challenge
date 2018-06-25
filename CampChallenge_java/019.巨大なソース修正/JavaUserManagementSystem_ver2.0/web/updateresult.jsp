@@ -18,7 +18,7 @@
         <h1>変更結果</h1><br>
         名前:<%=newUdd.getName()%><br>
         生年月日:<%=sdf.format(newUdd.getBirthday())%><br>
-        種別:<%=newUdd.getType()%><br>
+        種別:<%if(newUdd.getType() == 1){out.print("営業");} else if (newUdd.getType() == 2){out.print("エンジニア");} else {out.print("その他");}%><br>
         電話番号:<%=newUdd.getTell()%><br>
         自己紹介:<%=newUdd.getComment()%><br>
         以上の内容で登録しました。<br>

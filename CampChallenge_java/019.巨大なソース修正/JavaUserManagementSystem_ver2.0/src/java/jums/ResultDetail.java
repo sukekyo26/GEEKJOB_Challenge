@@ -39,6 +39,7 @@ public class ResultDetail extends HttpServlet {
                 UserDataDTO updateData = UserDataDAO.getInstance().searchByID(udd);//IDに対応したデータをセット
                 session.setAttribute("resultDetail", updateData);//セッション(ersultDetail)を再度更新
                 request.getRequestDispatcher("/resultdetail.jsp").forward(request, response); 
+                return;
             }   
             
             //DTOオブジェクトにマッピング。DB専用のパラメータに変換

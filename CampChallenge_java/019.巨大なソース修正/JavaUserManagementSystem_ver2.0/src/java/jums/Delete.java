@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,9 +24,10 @@ public class Delete extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException{
+            HttpSession session = request.getSession();
         
         try{
-            if(request.getParameter("delete") == null){
+            if(request.getParameter("delete") == null & session.getAttribute("resultDetail") == null){
                 throw new Exception("不正なアクセスです");
             }
             request.getRequestDispatcher("/delete.jsp").forward(request, response);
