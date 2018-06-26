@@ -2,6 +2,7 @@
         import="jums.JumsHelper" %>
 <%
     JumsHelper jh = JumsHelper.getInstance();
+    HttpSession hs = request.getSession();
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -32,7 +33,6 @@
             <input type="radio" name="type" value="<%=i%>"><%=jh.exTypenum(i)%><br>
             <% } %>
         <br>
-
         <input type="submit" name="btnSubmit" value="検索">
     </form>
         <br>

@@ -27,7 +27,8 @@ public class Delete extends HttpServlet {
             HttpSession session = request.getSession();
         
         try{
-            if(request.getParameter("delete") == null & session.getAttribute("resultDetail") == null){
+            String accessCheck = request.getParameter("check");
+            if(accessCheck == null || (Integer)session.getAttribute("check") != Integer.parseInt(accessCheck)){
                 throw new Exception("不正なアクセスです");
             }
             request.getRequestDispatcher("/delete.jsp").forward(request, response);

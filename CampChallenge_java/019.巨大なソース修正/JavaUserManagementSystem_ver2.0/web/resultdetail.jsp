@@ -4,6 +4,7 @@
         import="javax.servlet.http.HttpSession" %>
 <%
     JumsHelper jh = JumsHelper.getInstance();
+    HttpSession hs = request.getSession();
     UserDataDTO udd = (UserDataDTO)session.getAttribute("resultDetail");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 %>
@@ -24,13 +25,15 @@
         登録日時:<%= udd.getNewDate()%><br>
         <form action="Update" method="POST">
         <input type="submit" name="update" value="変更"style="width:100px">
+        <input type="hidden" name="check" value="<%=hs.getAttribute("check")%>">
         </form>
         <form action="Delete" method="POST">
         <input type="submit" name="delete" value="削除"style="width:100px">
+        <input type="hidden" name="check" value="<%=hs.getAttribute("check")%>">
         </form>
         <br>
         <form action="SearchResult" method="POST">
-        <input type="submit" name="back" value="検索結果に戻る">    
+        <input type="submit" name="back" value="検索結果に戻る">
         </form>
     </body>
 </html>

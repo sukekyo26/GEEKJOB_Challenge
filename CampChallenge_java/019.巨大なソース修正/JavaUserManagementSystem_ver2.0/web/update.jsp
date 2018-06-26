@@ -4,7 +4,8 @@
         import="javax.servlet.http.HttpSession" %>
 <%
     JumsHelper jh = JumsHelper.getInstance();
-    UserDataBeans udb = (UserDataBeans)session.getAttribute("udbData");//UserDataBeans用のセッションを使用
+    HttpSession hs = request.getSession();
+    UserDataBeans udb = (UserDataBeans)request.getAttribute("udbResultDetail");//UserDataBeans用のセッションを使用
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -59,10 +60,12 @@
         <br><br>
         
         <input type="submit" name="btnSubmit" value="更新">
+        <input type="hidden" name="check" value="<%=hs.getAttribute("check")%>">
     </form>
     <br>
     <form action="ResultDetail" method="POST">
-        <input type="submit" name="back" value="詳細情報に戻る">    
+        <input type="submit" name="back" value="詳細情報に戻る">
+        <input type="hidden" name="check" value="<%=hs.getAttribute("check")%>">
     </form>
         <br>
         <%=jh.home()%>

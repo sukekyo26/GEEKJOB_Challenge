@@ -28,10 +28,12 @@ public class DeleteResult extends HttpServlet {
         HttpSession session = request.getSession();
         UserDataDTO udd = (UserDataDTO)session.getAttribute("resultDetail");
         try {
-            if(request.getParameter("YES") == null){
+            String accessCheck = request.getParameter("check");
+            if(accessCheck == null || (Integer)session.getAttribute("check") != Integer.parseInt(accessCheck)){
                 throw new Exception("不正なアクセスです");
             }
             UserDataDAO.getInstance().deleteUserData(udd);
+            session.removeAttribute("resultDetail");
             request.getRequestDispatcher("/deleteresult.jsp").forward(request, response);
         } catch(Exception e) {
             request.setAttribute("error", e.getMessage());

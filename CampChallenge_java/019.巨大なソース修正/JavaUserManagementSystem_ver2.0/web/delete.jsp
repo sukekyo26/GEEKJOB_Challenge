@@ -4,6 +4,7 @@
         import="java.text.SimpleDateFormat"%>
 <%
     JumsHelper jh = JumsHelper.getInstance();
+    HttpSession hs = request.getSession();
     UserDataDTO udd = (UserDataDTO)session.getAttribute("resultDetail");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
 %>
@@ -26,9 +27,11 @@
     
     <form action="DeleteResult" method="POST">
       <input type="submit" name="YES" value="はい"style="width:100px">
+      <input type="hidden" name="check" value="<%=hs.getAttribute("check")%>">
     </form><br>
     <form action="ResultDetail" method="POST">
       <input type="submit" name="NO" value="いいえ(詳細情報に戻る)">
+      <input type="hidden" name="check" value="<%=hs.getAttribute("check")%>">
     </form>
     </body>
 </html>

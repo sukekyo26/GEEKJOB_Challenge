@@ -29,26 +29,23 @@ public class ResultDetail extends HttpServlet {
         try{
             request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
             
-            if(session.getAttribute("searchResultData") == null & session.getAttribute("searchDataDTO") == null){
-                throw new Exception("不正なアクセスです");
-            }
+            //DTOオブジェクトにマッピング。DB専用のパラメータに変換
+            UserDataDTO searchData = new UserDataDTO();
             
-            //session(resultDetail)にデータがあれば再度更新してから移動
-            if(session.getAttribute("resultDetail") != null) {
-                UserDataDTO udd = (UserDataDTO)session.getAttribute("resultDetail");
-                UserDataDTO updateData = UserDataDAO.getInstance().searchByID(udd);//IDに対応したデータをセット
-                session.setAttribute("resultDetail", updateData);//セッション(ersultDetail)を再度更新
+            //updateresult.jspから戻ってきた場合の処理
+            if(request.getParameter("back") != null && request.getParameter("back").equals("詳細情報に戻る") || session.getAttribute("resultDetail") != null) {
+                if(session.getAttribute("resultDetail") != null){request.getRequestDispatcher("/resultdetail.jsp").forward(request, response); return;}
+                searchData.setUserID(Integer.valueOf(request.getParameter("userId")));
+                //UserDataDTO udd = (UserDataDTO)session.getAttribute("resultDetail");
+                UserDataDTO updateData = UserDataDAO.getInstance().searchByID(searchData);//IDに対応したデータをセット
+                session.setAttribute("resultDetail", updateData);//セッション(resultDetail)を再度更新
                 request.getRequestDispatcher("/resultdetail.jsp").forward(request, response); 
                 return;
             }   
             
-            //DTOオブジェクトにマッピング。DB専用のパラメータに変換
-            UserDataDTO searchData = new UserDataDTO();
-            
             searchData.setUserID(Integer.valueOf(request.getParameter("id")));
             UserDataDTO resultData = UserDataDAO .getInstance().searchByID(searchData);
             session.setAttribute("resultDetail", resultData);//新セッション(resultDetail){クリックした人物のIDに対応するデータ情報}
-            
             request.getRequestDispatcher("/resultdetail.jsp").forward(request, response);  
         }catch(Exception e){
             //何らかの理由で失敗したらエラーページにエラー文を渡して表示。想定は不正なアクセスとDBエラー

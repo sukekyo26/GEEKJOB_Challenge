@@ -7,7 +7,8 @@
 
 <%
     JumsHelper jh = JumsHelper.getInstance();
-    ArrayList<UserDataDTO> udd = (ArrayList<UserDataDTO>)session.getAttribute("searchResultData");
+    HttpSession hs = request.getSession();
+    ArrayList<UserDataDTO> udd = (ArrayList<UserDataDTO>)request.getAttribute("searchResultData");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -28,6 +29,7 @@
                 <th>種別</th>
                 <th>登録日時</th>
             </tr>
+           
             <tr>
                 <td><a href="ResultDetail?id=<%= (Integer)udd.get(i).getUserID()%>"><%=(String)udd.get(i).getName()%></a></td>
                 <td><%= sdf.format(udd.get(i).getBirthday())%></td>
@@ -35,7 +37,9 @@
                 <td><%= (Date)udd.get(i).getNewDate()%></td>
             </tr>
                     <%}%>
-            </table>        
+            </table>
+            
+            
             <%}%> 
         
     </body>

@@ -1,4 +1,7 @@
-
+<%@page import="javax.servlet.http.HttpSession" %>
+<%
+    HttpSession hs = request.getSession();
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +15,7 @@
     <br>
     <form action="SearchResult" method="POST">
         <input type="submit" name="search" value="検索結果に戻る">
+        <input type="hidden" name="check" value="<%=hs.getAttribute("check")%>">
     </form>
     </body>
 </html>

@@ -23,7 +23,8 @@
         自己紹介:<%=newUdd.getComment()%><br>
         以上の内容で登録しました。<br>
         <form action="ResultDetail" method="POST">
-            <input type="submit" name="back" value="詳細情報に戻る">    
+            <input type="submit" name="back" value="詳細情報に戻る">
+            <input type="hidden" name="userId" value="<%=newUdd.getUserID()%>">
         </form>
     </body>
     <%=jh.home()%>

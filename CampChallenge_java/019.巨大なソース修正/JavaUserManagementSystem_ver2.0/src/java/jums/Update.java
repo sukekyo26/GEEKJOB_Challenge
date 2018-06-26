@@ -29,7 +29,8 @@ public class Update extends HttpServlet {
             HttpSession session = request.getSession();
             
         try {
-            if(request.getParameter("update") == null & session.getAttribute("resultDetail") == null){
+            String accessCheck = request.getParameter("check");
+            if(accessCheck == null || (Integer)session.getAttribute("check") != Integer.parseInt(accessCheck)){
                 throw new Exception("不正なアクセスです");
             }
             
@@ -37,7 +38,7 @@ public class Update extends HttpServlet {
             UserDataBeans udb = new UserDataBeans();
             udd.UD2DUDBMapping(udb);//DserDataDTOの値をUserDataBeansの値に変換
             //UserDataBeansの値をセッション(udbData)に格納
-            session.setAttribute("udbData", udb);
+            request.setAttribute("udbResultDetail", udb);
             //UserDataBean用セッション(udbData),UserDataDTO用セッション(resultData)今後使い分け
             request.getRequestDispatcher("/update.jsp").forward(request, response);
         } catch(Exception e) {

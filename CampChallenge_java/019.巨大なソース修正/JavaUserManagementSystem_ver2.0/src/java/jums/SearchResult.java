@@ -33,21 +33,17 @@ public class SearchResult extends HttpServlet {
         try{
             request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
             
-            if(session.getAttribute("searchResultData") == null & request.getParameter("btnSubmit") == null){
-                throw new Exception("不正なアクセスです");
-            }
-            
-            //Session(searchResultData)にデータがあればデータを再度更新してからsearchresut.jspに移動
-            if(session.getAttribute("searchResultData") != null) {
+
+            //DeleteResult.jspから戻ってきた場合の処理と
+            if(request.getParameter("search") != null && request.getParameter("search").equals("検索結果に戻る") || session.getAttribute("resultDetail") != null) {
                 //セッション(resultDetail)にデータが残っていた場合、例えばAさんの詳細情報から検索結果に戻った時にBさんの詳細情報を見ようとするとAさん情報が表示されてしまうのでここで削除
                 if(session.getAttribute("resultDetail") != null) session.removeAttribute("resultDetail");
-                
                 UserDataDTO beforeSearchData = (UserDataDTO)session.getAttribute("searchDataDTO");
                 ArrayList<UserDataDTO> updateSearchData = UserDataDAO.getInstance().search(beforeSearchData);//前回検索した項目に一致するデータを再度検索
-                session.setAttribute("searchResultData", updateSearchData);//セッション(searchResultData)を更新
+                request.setAttribute("searchResultData", updateSearchData);//リクエストスコープ(searchResultData)
                 request.getRequestDispatcher("/searchresult.jsp").forward(request, response); 
                 return;
-            }    
+            }
             
             
             //フォームからの入力を取得して、JavaBeansに格納
@@ -64,7 +60,7 @@ public class SearchResult extends HttpServlet {
             
             ArrayList<UserDataDTO> resultData = UserDataDAO.getInstance().search(searchData);
             //リクエストからセッションに変更
-            session.setAttribute("searchResultData", resultData);//newセッション(searchResultData){検索した項目に一致するデータをArrayListとして保持する}
+            request.setAttribute("searchResultData", resultData);//newセッション(searchResultData){検索した項目に一致するデータをArrayListとして保持する}
             
             request.getRequestDispatcher("/searchresult.jsp").forward(request, response);
         }catch(Exception e){

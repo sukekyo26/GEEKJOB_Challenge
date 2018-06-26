@@ -31,7 +31,8 @@ public class UpdateResult extends HttpServlet {
         UserDataDTO udd = (UserDataDTO)session.getAttribute("resultDetail");
         //UserDataBeans udb = (UserDataBeans)session.getAttribute("udbData");
         try {
-            if(request.getParameter("btnSubmit") == null){
+            String accessCheck = request.getParameter("check");
+            if(accessCheck == null || (Integer)session.getAttribute("check") != Integer.parseInt(accessCheck)){
                 throw new Exception("不正なアクセスです");
             }
             
@@ -62,7 +63,8 @@ public class UpdateResult extends HttpServlet {
             newUdd.setUserID(udd.getUserID());//ユーザーIDをnewUddに挿入
             UserDataDAO.getInstance().updateData(newUdd);//SQLのUPDATEを実行
             
-            //session.removeAttribute("resultData");//セッション(resultData)を破棄
+            
+            session.removeAttribute("resultData");//セッション(resultData)を破棄
             request.setAttribute("updateData", newUdd);//newリクエストスコープ(updateData){UserDataDTOの更新情報}
             request.getRequestDispatcher("/updateresult.jsp").forward(request, response);
         } catch(Exception e){
