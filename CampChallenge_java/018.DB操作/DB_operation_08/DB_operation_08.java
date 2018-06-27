@@ -47,7 +47,7 @@ public class DB_operation_08 extends HttpServlet {
             PreparedStatement db_ps = null;
             ResultSet db_rs = null;
             Profiles ps = new Profiles();
-            HashMap<String, String> datas = new HashMap<String, String>();
+            
             
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
@@ -68,10 +68,11 @@ public class DB_operation_08 extends HttpServlet {
                 for(int i = 1; i <= count ; i++){
                     db_rs.next();
                     String data = "ID: " + db_rs.getString(1) + " 名前: " + db_rs.getString(2) + " 電話番号: " + db_rs.getString(3) + " 年齢: " + db_rs.getString(4) + " 誕生日: " + db_rs.getString(5) + " " + "<br>";
-                    datas.put("n" + i, data);
-                    out.println(datas.get("n" + i));
-                }    
-                if(db_rs.previous() == false) out.print("該当する人物はデータはありません");
+                    ps.setData("n" + i, data);
+                    out.print(ps.getData("n" + i));
+                }
+                
+                if(db_rs.previous() == false & db_rs.next() == false) out.print("該当する人物データはありません");
  
                 db_co.close();
                 db_ps.close();
