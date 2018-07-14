@@ -1,0 +1,14 @@
+テーブルuser_t(ユーザー情報を保存するテーブル)
+カラム名 || userID || name || password || mail || address || total || newDate || deleteFlg ||
+論理名     || ユーザーID || ユーザー名 || パスワード || メールアドレス || 住所 || 総購入金額  || 登録日時 || 削除フラグ ||
+データ型 || int(PRIMARY, AUTOINCREMENT) || varchar(255) || varchar(255) || varchar(255) || text || int || Datetime || int(初期値0)
+
+テーブルbuy_t(購入情報を保存するテーブル)
+カラム名 || buyID || userID || itemCode || type || buyDate || itemNumber ||
+論理名 || 購入ID || ユーザーID || 商品コード || 発送方法 || 購入日時 || 商品個数 || 
+データ型 || int(PRIMARY, AUTOINCREMENT) || int(外部キー) || varchar(255) || int || Datetime ||
+
+テーブルcart_t(カートの中身を保存するテーブル。購入後に削除)
+カラム名 || cartID || userID || itemCode || itemNumber ||
+論理名 || カートID || ユーザーID || 商品コード || 商品個数 ||
+データ型 || int(PRIMARY, AUTOINCREMENT) || int(外部キー) || varchar(255) || int ||
