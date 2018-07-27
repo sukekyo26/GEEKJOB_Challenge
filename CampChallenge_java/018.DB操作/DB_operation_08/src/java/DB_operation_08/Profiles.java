@@ -12,10 +12,10 @@ import java.util.HashMap;
  */
 public class Profiles {
     
-    private HashMap<String, String> data;
+    private HashMap<String, String> data = new HashMap<String, String>();
     
     public Profiles(){
-        this.data = new HashMap<String, String>();
+        //this.data = new HashMap<String, String>();どっちでも出来る
     }
     
     public String getData(String a){
