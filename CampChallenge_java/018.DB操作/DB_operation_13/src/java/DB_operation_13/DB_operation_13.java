@@ -44,6 +44,8 @@ public class DB_operation_13 extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             
+            //ログイン、ログアウト、商品登録、商品表示のすべての処理を司るサーブレットクラス
+            
             request.setCharacterEncoding("UTF-8");
             Connection co = null;
             PreparedStatement ps = null;
